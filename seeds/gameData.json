@@ -1,14 +1,42 @@
 [
-    {
-      "name": "Music Near Me",
-      "description": "A mobile app that will send you notifications whenever a concert is playing in your area."
-    },
-    {
-      "name": "The Ultimate Tech Quiz",
-      "description": "A web app that will give users 10 new technical questions each day and track their progress in things like programming, cybersecurity, database architecture, and more!"
-    },
-    {
-      "name": "Roll 'Em Up",
-      "description": "A game for Windows and macOS where players move a ball through a series of increasingly challenging mazes."
-    }
-  ]
+  {
+    "name": "Egret, great",
+    "description": "risus dapibus augue vel accumsan tellus nisi eu orci"
+  },
+  {
+    "name": "Hoopoe, eurasian",
+    "description": "suspendisse potenti nullam porttitor lacus at turpis"
+  },
+  {
+    "name": "Stork, white",
+    "description": "dis parturient montes nascetur ridiculus mus"
+  },
+  {
+    "name": "White-faced tree rat",
+    "description": "sed vestibulum sit amet cursus id turpis integer aliquet massa"
+  },
+  {
+    "name": "Frilled lizard",
+    "description": "volutpat eleifend donec ut dolor"
+  },
+  {
+    "name": "Raccoon dog",
+    "description": "est congue elementum in hac habitasse platea"
+  },
+  {
+    "name": "Dragon, netted rock",
+    "description": "sit amet lobortis sapien sapien"
+  },
+  {
+    "name": "Kori bustard",
+    "description": "faucibus orci luctus et ultrices posuere"
+  },
+  {
+    "name": "Gazelle, thomson's",
+    "description": "nisl duis ac nibh fusce lacus purus aliquet"
+  },
+  {
+    "name": "Weaver, lesser masked",
+    "description": "vel nulla eget eros elementum pellentesque quisque porta"
+  }
+]
