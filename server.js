@@ -9,13 +9,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const sess = {
-  secret: 'Super secret secret',
+  // protect your secret via an environment variable
+  secret: process.env.SECRET,
   cookie: {},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize
-  })
+  }),
 };
 
 app.use(session(sess));
