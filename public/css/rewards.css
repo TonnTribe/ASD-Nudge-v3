@@ -2,6 +2,11 @@ body {
     display: flex;
     flex-direction: column;
     line-height: 1;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
 }
 
 .container-fluid {
