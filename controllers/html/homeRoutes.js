@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { Game, User } = require('../models');
-const withAuth = require('../utils/auth');
+const sequelize = require('../../config/connection');
+const { Game, GameSession, User } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
@@ -8,9 +9,15 @@ router.get('/', async (req, res) => {
     const gameData = await Game.findAll({
       include: [
         {
-          model: User,
-          attributes: ['username'],
+          model: GameSession,
+          include: [
+            {
+              model: User,
+              attributes: ['username'],
+            },
+          ]
         },
+        
       ],
     });
 

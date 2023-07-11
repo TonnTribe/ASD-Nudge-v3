@@ -4,14 +4,14 @@ const { Game } = require('../../models');
 router.post('/', async (req, res) => {
   try {
     const newGame = await Game.create({
-      ...req.body,
-      user_id: req.session.user_id,
+      name: req.body.title,
+      description: req.body.description,
+      user_id: req.body.user_id
     });
-
-    res
-    .status(200).json(newGame); 
-  } catch (err) {
-    res.status(400).json(err);
+    res.status(201).json(newGame); 
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 });
 
