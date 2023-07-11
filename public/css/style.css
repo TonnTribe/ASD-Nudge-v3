@@ -40,39 +40,54 @@ nav a {
     align-items: center;
 }
 
-.carousel {
-    max-height: 400px;
-    width: 50%;
-    justify-content: center;
+section {
+    display: inline-block;
+    margin-top: 2%;
 }
 
-.container h2 {
-    display: flex;
-    color: rgba(255, 0, 0, 0.842);
-    align-items: center;
-    justify-content: center;
+section img {
+    display: inline-block;
+    max-height: 200px;
+    text-align: center;
+    max-width: fit-content;
 }
 
-.container p {
-    display: flex;
+aside {
+    display: inline-block;
+}
+
+aside li {
+    display: inline-flexbox;
+    list-style-type: none;
     margin-top: 20px;
-    color: rgba(255, 0, 0, 0.842);
-    align-items: center;
-    justify-content: center;
 }
 
-.startBtn {
-    color: white;
-    background-color: #0D6EFD;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
+aside a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt;
+    display: inline-flexbox;
+    color:slategray;
+    list-style-type: none;
+    line-height: 28pt;
+    text-decoration: none;
 }
 
-.youtube-container a {
-    text-decoration: none;  
+aside img {
+    max-width: 140px;
+    display: flex;
+    margin-bottom: 20px;
 }
 
-.youtube-container img {
-    max-width: 10%;
+.card {
+    justify-content: space-between;
+}
+
+.card img {
+    display: inline-flex;
+    text-align: center;
+}
+
+.card-link {
+    text-decoration: none;
+    font-weight: bold;
 }
