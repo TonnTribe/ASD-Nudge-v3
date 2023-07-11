@@ -5,7 +5,7 @@ const loginFormHandler = async (event) => {
     ('#user-email').value
     const userPassword = document.querySelector
     ('#user-password').value
-
+    console.log(userEmail, userPassword);
     const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
@@ -13,6 +13,7 @@ const loginFormHandler = async (event) => {
     });
 
     if (response.ok) {
+        console.log('res.ok')
         document.location.replace('/');
     } else {
         alert(response.statusText);
