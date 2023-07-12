@@ -21,13 +21,13 @@ body {
 }
   
 nav a {
-    color: black;
+    color: white;
     font-weight: bold;
     text-decoration: none;
 }
 
 .nav-item a:hover {
-    color: gold;
+    color:darkgrey ;
 }
 
 .nav-link {
@@ -36,7 +36,7 @@ nav a {
 
 .project {
     color: white;
-    max-width: fit-content;
+    max-width:inherit;
     align-items: center;
 }
 
@@ -85,9 +85,14 @@ aside img {
 .card img {
     display: inline-flex;
     text-align: center;
+    vertical-align: baseline;
 }
 
 .card-link {
     text-decoration: none;
     font-weight: bold;
+}
+
+.btnSubmit {
+    margin-top: 10px;
 }
