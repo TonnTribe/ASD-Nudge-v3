@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const { Game } = require('../../models');
+const { Game, User } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
     const newGame = await Game.create({
-      name: req.body.title,
+      name: req.body.name,
       description: req.body.description,
-      user_id: req.body.user_id
     });
     res.status(201).json(newGame); 
   } catch (error) {
@@ -15,24 +14,64 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.get('/', async (req,res) => {
   try {
-    const gameData = await Game.destroy({
+    const games = await Game.findAll({
+    });
+    res.status(200).json(games);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+router.get('/:gameId', async (req, res) => {
+  try {
+    const game = await Game.findByPk(req.params.gameId, {
+    });
+
+    if (!game) return res.status(404).json({message: 'No game found.'});
+
+    res.status(200).json(game)
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+router.put('/:gameId', async (req, res) => {
+  try {
+    const updatedGame = await Game.update(req.body, {
       where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
+        id: req.params.gameId,
+      },
+      individualHooks: true,
+    });
+    
+    if (!updatedGame[0]) return res.status(404).json({message: 'No game found.'});
+
+    res.status(202).json(updatedGame);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  };
+});
+
+router.delete('/:gameId', async (req, res) => {
+  try {
+    const deletedGame = await Game.destroy({
+      where: {
+        id: req.params.gameId
       },
     });
 
-    if (!gameData) {
-      res.status(404).json({ message: 'No game found with this id!' });
-      return;
-    }
-
-    res.status(200).json(gameData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+    if (!deletedGame) return res.status(404).json({message: 'No game found.'});
+    
+    res.status(202).json(deletedGame);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  };
 });
 
 module.exports = router;
