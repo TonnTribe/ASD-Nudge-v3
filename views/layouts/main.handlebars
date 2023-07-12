@@ -25,26 +25,25 @@
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav me-auto .col-6 mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="./index.html">Home</a>
+            <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./calendar.html">Calendar</a>
+            <a class="nav-link" href="#">Calendar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./routines.html">Routines</a>
+            <a class="nav-link" href="#">Routines</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./rewards.html">Rewards</a>
+            <a class="nav-link" href="#">Rewards</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
         </ul>
       <nav>
-        <!-- Conditionally render login or logout links -->
         {{#if logged_in}}
         <a href="/profile">profile</a> |
-        <button class="no-button" id="logout">logout</button>
+        <button id="logout">logout</button>
         {{else}}
         <a href="/login">login</a>
         {{/if}}
@@ -57,75 +56,11 @@
     </div>
   </nav>
 
-  <section class="d-flex justify-content-around">
-
-    <aside class="d-flex justify-content-start">
-      <div class="list-group">
-        <ul>
-          <img src="./assets/puzzle_logo.png" width="50%" class="card-img-top" alt="puzzle_logo image">
-          <li><a href="#">Calendar</a></li>
-          <li><a href="#">Routines</a></li>
-          <li><a href="#">Rewards</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>        
-    </aside>
-      
-    <div class="card d-inline-flex p-lg-3">
-      <img src="./assets/calendar-icon.png" width="20%" class="card-img-bottom" alt="calendar icon image">
-      <div class="card-body">
-        <h5 class="card-title">Calendar</h5>
-        <p class="card-text">Create a daily task list with reminders.</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Schedule</li>
-        <li class="list-group-item">Task List</li>
-        <li class="list-group-item">Reminder</li>
-      </ul>
-      <div class="card-body">
-        <a href="./calendar.html" class="card-link link-primary text-decoration-none">Calendar</a>
-        <a href="#" class="card-link">Schedule</a>
-      </div>
-    </div>
-
-    <div class="card d-inline-flex p-lg-3">
-      <img src="./assets/routine.jpeg" class="card-img-bottom" alt="image of a clock">
-      <div class="card-body">
-        <h5 class="card-title">Routines</h5>
-        <p class="card-text">Create tasks and routines here:</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Routine 1</li>
-        <li class="list-group-item">Task 1</li>
-        <li class="list-group-item">Routine 2</li>
-      </ul>
-      <div class="card-body">
-        <a href="./routines.html" class="card-link">Routines</a>
-      </div>
-    </div>
-
-    <div class="card d-inline-flex p-lg-3">
-      <img src="./assets/rewards.png" class="card-img-bottom" alt="image of a rewards banner">
-      <div class="card-body">
-        <h5 class="card-title">Rewards</h5>
-        <p class="card-text">After finishing tasks, assign a reward!.</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">YouTube</li>
-        <li class="list-group-item">Games</li>
-        <li class="list-group-item">Badges/Stickers</li>
-      </ul>
-      <div class="card-body">
-        <a href="#" class="card-link">Rewards</a>
-      </div>
-    </div>
-  </section>
   <main>
     {{{body}}}
   </main>
-  <footer class="bd-footer d-flex flex-wrap justify-content-center align-items-center mt-5 py-5 bg-primary fixed-bottom" style="height: 83px;">
-    <div class="col-md-4 d-flex align-items-center">
+  <footer class="bd-footer d-flex flex-wrap justify-content-center align-items-center mt-5 py-5 bg-primary fixed-bottom  text-center" style="height: 83px;">
+    <div class="col-md-4 d-flex">
       <span class="project">© 2023 ASD Nudge</span>
     </div>
   </footer>
