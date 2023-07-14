@@ -39,7 +39,9 @@ nav a {
     max-width:inherit;
     align-items: center;
 }
-
+form {   
+    border: 0px solid #f1f1f1;   
+}   
 section {
     display: inline-block;
     margin-top: 2%;
