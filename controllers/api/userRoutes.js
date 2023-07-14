@@ -2,21 +2,24 @@ const router = require('express').Router();
 const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
-  console.log('req.body', req.body);
   try {
-    const userData = await User.create({
+    const newUser = await User.create({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
     });
     // TODO: modify session object to include user information and loggedIN boolean
-    res.status(201).json(userData);
+    req.session.save(() => {
+      (req.session.userId = newUser.id), (req.session.loggedIn = true);
+      res.status(201).json(newUser);
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }
 });
 
+// TODO: ICEBOX - Admin routes
 router.get('/', async (req, res) => {
   try {
     const users = await User.findAll({
@@ -31,6 +34,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Route to retrieve logged in user's profile
+router.get('/profile', async (req, res) => {
+  if (!req.session.loggedIn) return res.redirect('/login');
+  try {
+    const user = await User.findByPk(req.session.userId, {
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+
+    if (!user) return res.status(404).json({message: 'No user found.'});
+
+    res.status(200).json(user)
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+// TODO: ICEBOX - Admin routes
 router.get('/:userId', async (req, res) => {
   try {
     const user = await User.findByPk(req.params.userId, {
@@ -48,11 +71,11 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-router.put('/:userId', async (req, res) => {
+router.put('/profile', async (req, res) => {
   try {
     const updatedUser = await User.update(req.body, {
       where: {
-        id: req.params.userId,
+        id: req.session.userId,
       },
       individualHooks: true,
     });
@@ -66,6 +89,25 @@ router.put('/:userId', async (req, res) => {
   };
 });
 
+router.delete('/profile', async (req, res) => {
+  if (!req.session.loggedIn) return res.redirect('/login');
+  try {
+    const deletedUser = await User.destroy({
+      where: {
+        id: req.session.userId,
+      },
+    });
+
+    if (!deletedUser) return res.status(404).json({message: 'No user found.'});
+    
+    res.status(202).json(deletedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  };
+});
+
+// TODO: ICEBOX - Admin routes
 router.delete('/:userId', async (req, res) => {
   try {
     const deletedUser = await User.destroy({
