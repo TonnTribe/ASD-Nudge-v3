@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 
 router.get('/game/:id', async (req, res) => {
   try {
-    const gameData = await game.findByPk(req.params.id, {
+    const gameData = await Game.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -69,20 +69,19 @@ router.get('/login', (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, res) => {
+router.get('/profile', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Game }],
+      include: [{ model: GameSession, include: [{ model: User }] }],
     });
-
     const user = userData.get({ plain: true });
-
-    res.render('profile', {
-      ...user,
-      logged_in: true
-    });
+    res.render('profile')
+    // , {
+    // //   user,
+    // //   loggedIn: true
+    // // });
   } catch (err) {
     res.status(500).json(err);
   }

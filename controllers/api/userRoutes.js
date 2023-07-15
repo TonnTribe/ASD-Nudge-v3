@@ -127,18 +127,17 @@ router.delete('/:userId', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  console.log('req.body', req.body)
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
-    console.log('userData', userData)
-    if (!userData) {
+    const user = await User.findOne({ where: { email: req.body.email } });
+
+    if (!user) {
       res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .status(404)
+        .json({ message: 'Incorrect email, please try again' });
       return;
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
+    const validPassword = await user.checkPassword(req.body.password);
 
     if (!validPassword) {
       res
@@ -148,15 +147,16 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.user_id = user.id;
       req.session.logged_in = true;
       console.log('req.session', req.session)
-      res.json({ user: userData, message: 'You are now logged in!' });
+      res.json({ user: user, message: 'You are now logged in!' });
     });
 
-  } catch (err) {
-    res.status(400).json(err);
-  }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  };
 });
 
 router.post('/logout', (req, res) => {
