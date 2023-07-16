@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { Game, GameSession, User } = require('../../models');
 const withAuth = require('../../utils/auth');
-
+const game_cord = require('discord-gamecord');
 router.get('/', async (req, res) => {
   try {
     // Get all games and JOIN with user data
