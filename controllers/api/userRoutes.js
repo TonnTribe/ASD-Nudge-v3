@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
   try {
@@ -10,7 +11,7 @@ router.post('/', async (req, res) => {
     });
     // TODO: modify session object to include user information and loggedIN boolean
     req.session.save(() => {
-      (req.session.userId = newUser.id), (req.session.loggedIn = true);
+      (req.session.user_id = newUser.id), (req.session.loggedIn = true);
       res.status(201).json(newUser);
     });
   } catch (error) {
@@ -35,10 +36,9 @@ router.get('/', async (req, res) => {
 });
 
 // Route to retrieve logged in user's profile
-router.get('/profile', async (req, res) => {
-  if (!req.session.loggedIn) return res.redirect('/login');
+router.get('/profile', withAuth, async (req, res) => {
   try {
-    const user = await User.findByPk(req.session.userId, {
+    const user = await User.findByPk(req.session.user_id, {
       attributes: {
         exclude: ['password'],
       },
@@ -54,9 +54,9 @@ router.get('/profile', async (req, res) => {
 });
 
 // TODO: ICEBOX - Admin routes
-router.get('/:userId', async (req, res) => {
+router.get('/:user_id', async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.userId, {
+    const user = await User.findByPk(req.params.user_id, {
       attributes: {
         exclude: ['password'],
       },
@@ -71,11 +71,11 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-router.put('/profile', async (req, res) => {
+router.put('/profile', withAuth, async (req, res) => {
   try {
     const updatedUser = await User.update(req.body, {
       where: {
-        id: req.session.userId,
+        id: req.session.user_id,
       },
       individualHooks: true,
     });
@@ -89,12 +89,11 @@ router.put('/profile', async (req, res) => {
   };
 });
 
-router.delete('/profile', async (req, res) => {
-  if (!req.session.loggedIn) return res.redirect('/login');
+router.delete('/profile', withAuth, async (req, res) => {
   try {
     const deletedUser = await User.destroy({
       where: {
-        id: req.session.userId,
+        id: req.session.user_id,
       },
     });
 
@@ -108,11 +107,11 @@ router.delete('/profile', async (req, res) => {
 });
 
 // TODO: ICEBOX - Admin routes
-router.delete('/:userId', async (req, res) => {
+router.delete('/:user_id', async (req, res) => {
   try {
     const deletedUser = await User.destroy({
       where: {
-        id: req.params.userId
+        id: req.params.user_id
       },
     });
     console.log(deletedUser);
@@ -132,7 +131,7 @@ router.post('/login', async (req, res) => {
 
     if (!user) {
       res
-        .status(404)
+        .status(400)
         .json({ message: 'Incorrect email, please try again' });
       return;
     }
@@ -142,25 +141,23 @@ router.post('/login', async (req, res) => {
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .json({ message: 'Incorrect password, please try again' });
       return;
     }
 
     req.session.save(() => {
       req.session.user_id = user.id;
-      req.session.logged_in = true;
-      console.log('req.session', req.session)
+      req.session.loggedIn = true;
       res.json({ user: user, message: 'You are now logged in!' });
     });
-
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   };
 });
 
-router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
+router.post('/logout', async (req, res) => {
+  if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();
     });

@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const { Game, User } = require('../../models');
+const { Game, } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   try {
     const newGame = await Game.create({
       name: req.body.name,
@@ -25,9 +26,9 @@ router.get('/', async (req,res) => {
   }
 });
 
-router.get('/:gameId', async (req, res) => {
+router.get('/:game_id', async (req, res) => {
   try {
-    const game = await Game.findByPk(req.params.gameId, {
+    const game = await Game.findByPk(req.params.game_id, {
     });
 
     if (!game) return res.status(404).json({message: 'No game found.'});
@@ -39,11 +40,11 @@ router.get('/:gameId', async (req, res) => {
   }
 });
 
-router.put('/:gameId', async (req, res) => {
+router.put('/:game_id', withAuth, async (req, res) => {
   try {
     const updatedGame = await Game.update(req.body, {
       where: {
-        id: req.params.gameId,
+        id: req.params.game_id,
       },
       individualHooks: true,
     });
@@ -57,11 +58,11 @@ router.put('/:gameId', async (req, res) => {
   };
 });
 
-router.delete('/:gameId', async (req, res) => {
+router.delete('/:game_id', withAuth, async (req, res) => {
   try {
     const deletedGame = await Game.destroy({
       where: {
-        id: req.params.gameId
+        id: req.params.game_id
       },
     });
 
