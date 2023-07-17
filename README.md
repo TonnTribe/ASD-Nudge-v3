@@ -29,6 +29,7 @@ Handlebars
 ![Log in](public/assets/loginpage.png)
 
 ## Profile Page
+![Profile](public/assets/profile.png)
 
 ## Links:
 
