@@ -14,7 +14,7 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
         console.log('res.ok')
-        document.location.replace('/');
+        document.location.replace('/game/1');
     } else {
         alert(response.statusText);
     }

@@ -41,7 +41,7 @@
           </li>
         </ul>
       <nav>
-        {{#if logged_in}}
+        {{#if loggedIn}}
         <a href="/profile">profile</a> |
         <button id="logout">logout</button>
         {{else}}
@@ -65,7 +65,7 @@
     </div>
   </footer>
 
- {{#if logged_in}}
+ {{#if loggedIn}}
   <script src="/js/logout.js"></script>
   {{/if}}
 </body>
