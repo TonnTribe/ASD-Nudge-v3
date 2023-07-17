@@ -3,7 +3,6 @@ const { User, Game, GameSession } = require('../models');
 
 const userData = require('./userData.json');
 const gameData = require('./gameData.json');
-// const gameSessionData = require('./gameSessionData.json');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });

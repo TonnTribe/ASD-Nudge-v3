@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { Game, GameSession, User } = require('../../models');
 const withAuth = require('../../utils/auth');
-const game_cord = require('discord-gamecord');
+
 router.get('/', async (req, res) => {
   try {
     // Get all games and JOIN with user data
@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       games, 
-      logged_in: req.session.logged_in 
+      loggedIn: req.session.loggedIn 
     });
   } catch (err) {
     res.status(500).json(err);
@@ -39,8 +39,13 @@ router.get('/game/:id', async (req, res) => {
     const gameData = await Game.findByPk(req.params.id, {
       include: [
         {
-          model: User,
-          attributes: ['name'],
+          model: GameSession,
+          include: [
+            {
+              model: User,
+              attributes: ['username'],
+            }
+          ]
         },
       ],
     });
@@ -49,7 +54,7 @@ router.get('/game/:id', async (req, res) => {
 
     res.render('game', {
       ...game,
-      logged_in: req.session.logged_in
+      loggedIn: req.session.loggedIn
     });
   } catch (err) {
     res.status(500).json(err);
@@ -60,7 +65,7 @@ router.get('/game/:id', async (req, res) => {
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     res.redirect('/profile');
     return;
   }
@@ -77,7 +82,7 @@ router.get('/profile', async (req, res) => {
       include: [{ model: GameSession, include: [{ model: User }] }],
     });
     const user = userData.get({ plain: true });
-    res.render('profile')
+    res.render('profile', {loggedIn: req.session.loggedIn});
     // , {
     // //   user,
     // //   loggedIn: true
